@@ -1,10 +1,12 @@
+
 #include"TransformSystyem.h"
-
 #include"../MyComponents/TransformComponent.h"
+#include"../Base/ECS_Engine.h"
 
-void TransformSystem::Reset_Component(const uint32_t& Entity)
+
+void TransformSystem::ResetComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	std::shared_ptr<TransformComponent> transform_component = std::static_pointer_cast<TransformComponent>(m_System_DataStore[Entity]);
+	auto transform_component = ecs.GetComponent<TransformComponent>(entityID);
 
 	transform_component->position = {0.0f, 0.0f};
 	transform_component->rotation = 0.0f;

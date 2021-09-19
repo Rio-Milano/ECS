@@ -6,7 +6,7 @@
 
 #include<SFML/Graphics.hpp>
 
-struct TransformComponent : public BaseComponent
+struct TransformComponent final : public BaseComponent
 {
 	sf::Vector2f position{ 0.0f, 0.0f };
 	

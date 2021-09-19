@@ -4,7 +4,7 @@
 #include"../Base/BaseComponent.h"
 #include"SFML/Graphics.hpp"
 
-struct SpriteComponent : public BaseComponent
+struct SpriteComponent final : public BaseComponent
 {
 	//a texture is made and initialized and a sprite holds an alies to that texture 
 	sf::Sprite sprite;

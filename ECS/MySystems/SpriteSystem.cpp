@@ -4,20 +4,19 @@
 #include"../MyComponents/TransformComponent.h"
 
 #include"../Base/ECS_Engine.h"
-#define ECS ECS_Engine::Get_Instance()
 
-void SpriteSystem::Reset_Component(const uint32_t& Entity)
+void SpriteSystem::ResetComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	static_cast<SpriteComponent*>(m_System_DataStore[Entity].get())->sprite.setTexture(sf::Texture());
+	ecs.GetComponent<SpriteComponent>(entityID)->sprite.setTexture(sf::Texture());
 }
 
 
-void SpriteSystem::Update_Component(const uint32_t& Entity)
+void SpriteSystem::UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	if (!Is_Memory_Vaid({ ECS.m_systems.m_TransformSystem->Get_Component(Entity)}))throw std::string("Bad Memory");
+	if (!IsMemoryValid({ ecs.GetComponent<SpriteComponent>(entityID)}))throw std::string("Bad Memory");
 
-	std::shared_ptr<TransformComponent> l_transform = std::static_pointer_cast<TransformComponent>(ECS.m_systems.m_TransformSystem->Get_Component(Entity));
-	std::shared_ptr<SpriteComponent> l_sprite = std::static_pointer_cast<SpriteComponent>(m_System_DataStore[Entity]);
+	std::shared_ptr<TransformComponent> l_transform = ecs.GetComponent<TransformComponent>(entityID);
+	std::shared_ptr<SpriteComponent> l_sprite = ecs.GetComponent<SpriteComponent>(entityID);
 
 	l_sprite->sprite.setPosition(l_transform->position);
 	l_sprite->sprite.setRotation(l_transform->rotation);

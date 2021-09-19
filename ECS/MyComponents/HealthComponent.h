@@ -3,7 +3,7 @@
 
 #include"../Base/BaseComponent.h"
 
-struct HealthComponent : public BaseComponent
+struct HealthComponent final : public BaseComponent
 {
 	HealthComponent() : HP(), MAX_HP() {};	
 	~HealthComponent() = default;

@@ -2,7 +2,7 @@
 #define BASECOMPONENT_H
 
 
-struct BaseComponent
+struct BaseComponent 
 {
 	BaseComponent() = default;
 	~BaseComponent() = default;

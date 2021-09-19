@@ -1,59 +1,56 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-//<> includes
-#include<memory>//gives use to uint32_t
-#include<list>//gives use to hash map
+#include<memory>
+#include<list>
 #include<unordered_map>
-
-//""includes
-#include"BaseComponent.h"//using polymorphic design in which we store components and cast down hirearchy when access is needed
+#include"BaseComponent.h"
 
 /*
-This class is used as a template for on-demand created systems and also to make use of polymorphism to make
-updating all systems efficient 
+This is the base class to all of the systems 
 */
+
+//forward decleration of ECS_Engine to fix circular reference 
+class ECS_Engine;
 
 class System
 {
 public:
-
+	//ctors and dtors
 	System() = default;
 	~System() = default;
 
-	/*
-	* INHERITED FUNCTIONS
-	*/
-	//clears the data store of the system
-	void Hard_Reset_System();
+	//remove all components from memory
+	void ClearComponents();
 	
-	//retrives the data store of the system
-	std::unordered_map<uint32_t, std::shared_ptr<BaseComponent>>& Get_Data_Store();
+	//Take in a list of components needed for a component update and check if any are invalid
+	const bool IsMemoryValid(const std::list<std::shared_ptr<BaseComponent>>& listOfComponentPointers) const;
 
-	//used to check the validity of related components 
-	const bool Is_Memory_Vaid(const std::list<std::shared_ptr<BaseComponent>>& Pointer_List);
+	//get a component from the component map
+	const std::shared_ptr<BaseComponent>& GetComponent(const uint32_t& entityID);
 
-	//gets a component from a system
-	const std::shared_ptr<BaseComponent>& Get_Component(const uint32_t& Entity);
-
-	//adds a component to a system
-	const std::shared_ptr<BaseComponent>& Add_Component(const uint32_t& Entity, const std::shared_ptr<BaseComponent>& Component);
+	//add a component to the system map
+	const std::shared_ptr<BaseComponent>& AddComponent(const uint32_t& entityID, const std::shared_ptr<BaseComponent>& component);
+	
+	//Remove a component from the system map
+	void RemoveComponent(const uint32_t& entityID);
 	
 	/*
-	PURE VIRTUAL
+	Pure Virtual
 	*/
-	//sets a component to its default state
-	virtual void Reset_Component(const uint32_t& Entity) = 0;
+	//Puts component back to its default state
+	virtual void ResetComponent(const uint32_t& entityID, ECS_Engine& ecs) = 0;
 	
-
 	/*
-	VIRTUAL
+	Virtual
 	*/
-	virtual void Update_Component(const uint32_t& Entity) {};
+	//Updates component data
+	virtual void UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs) {};
 
 
 protected:
-	std::unordered_map<uint32_t, std::shared_ptr<BaseComponent>> m_System_DataStore;
+	//maps entityID to component
+	std::unordered_map<uint32_t, std::shared_ptr<BaseComponent>> m_Component_DataStore;
 
 
 	

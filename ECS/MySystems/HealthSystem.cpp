@@ -1,11 +1,14 @@
-#include "HealthSystem.h"
 #include<iostream>
-
 #include<memory>
 
-void HealthSystem::Update_Component(const uint32_t& Entity)
+#include "HealthSystem.h"
+#include"../Base/ECS_Engine.h"
+
+
+
+void HealthSystem::UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	std::shared_ptr<HealthComponent> l_HP{std::static_pointer_cast<HealthComponent>( m_System_DataStore[Entity])};
+	auto l_HP = ecs.GetComponent<HealthComponent>(entityID);
 	
 	l_HP->HP += 1.f;
 
@@ -13,6 +16,6 @@ void HealthSystem::Update_Component(const uint32_t& Entity)
 		l_HP->HP = l_HP->MAX_HP;
 }
 
-void HealthSystem::Reset_Component(const uint32_t& Entity)
+void HealthSystem::ResetComponent(const uint32_t& Entity, ECS_Engine& ecs)
 {
 }

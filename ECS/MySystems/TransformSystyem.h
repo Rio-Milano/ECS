@@ -4,17 +4,21 @@
 #include"../Base/System.h"
 #include"../MyComponents/TransformComponent.h"
 
-class TransformSystem : public System
+class TransformSystem final: public System
 {
 public:
 	/*
 	SEE SYSTEM CLASS FOR COMMENTS
 	*/
 
+	//ctors and dtors
 	TransformSystem() = default;
 	~TransformSystem() = default;
 
-	void Reset_Component(const uint32_t& Entity) override final;
+	/*
+	Overriding Virtual Functions
+	*/
+	void ResetComponent(const uint32_t& entityID, ECS_Engine& ecs) override final;
 
 
 };

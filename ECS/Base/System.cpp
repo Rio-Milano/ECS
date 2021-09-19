@@ -1,33 +1,34 @@
 #include "System.h"
 
 
-void System::Hard_Reset_System()
+void System::ClearComponents()
 {
-	m_System_DataStore.clear();
+	m_Component_DataStore.clear();
 }
 
-std::unordered_map<uint32_t, std::shared_ptr<BaseComponent>>& System::Get_Data_Store()
+const bool System::IsMemoryValid(const std::list<std::shared_ptr<BaseComponent>>& listOfComponentPointers) const
 {
-	return m_System_DataStore;
-}
-
-const bool System::Is_Memory_Vaid(const std::list<std::shared_ptr<BaseComponent>>& Pointer_List)
-{
-	for (auto i : Pointer_List)
+	for (auto i : listOfComponentPointers)
 		if (!i) return false;
 	return true;
 }
 
-const std::shared_ptr<BaseComponent>& System::Get_Component(const uint32_t& Entity)
+const std::shared_ptr<BaseComponent>& System::GetComponent(const uint32_t& entityID)
 {
-	return m_System_DataStore[Entity];
+	return m_Component_DataStore[entityID];
 }
 
-const std::shared_ptr<BaseComponent>& System::Add_Component(const uint32_t& Entity, const std::shared_ptr<BaseComponent>& Component)
+const std::shared_ptr<BaseComponent>& System::AddComponent(const uint32_t& entityID, const std::shared_ptr<BaseComponent>& component)
 {
-	m_System_DataStore[Entity] = Component;
-	return Component;
+	m_Component_DataStore[entityID] = component;
+	return component;
 }
+
+void System::RemoveComponent(const uint32_t& entityID)
+{
+	m_Component_DataStore.erase(entityID);
+}
+
 
 
 

@@ -1,22 +1,23 @@
-#include "KeyboardMovementSystem.h"
 
+
+
+#include "KeyboardMovementSystem.h"
 #include"../MyComponents/MovementComponent.h"
 #include"../MyComponents/TransformComponent.h"
-
 #include"../Base/ECS_Engine.h"
-#define ECS ECS_Engine::Get_Instance()
-
 #include"TransformSystyem.h"
+#include"../MyComponents/KeyboardMovementSystemComponent.h"
+
 
 #include<SFML/System.hpp>
 
 
-void KeyboardMovementSystem::Update_Component(const uint32_t& Entity)
+void KeyboardMovementSystem::UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	if (!Is_Memory_Vaid({ ECS.m_systems.m_TransformSystem->Get_Component(Entity) }))throw std::string("Bad Memory");
+	if (!IsMemoryValid({ ecs.GetComponent<TransformComponent>(entityID) }))throw std::string("Bad Memory");
 
-	std::shared_ptr<MovementComponent> l_MovementComponent{ std::static_pointer_cast<MovementComponent>( m_System_DataStore[Entity] )}; 
-	std::shared_ptr<TransformComponent> l_TransformComponent{ std::static_pointer_cast<TransformComponent>(ECS.m_systems.m_TransformSystem->Get_Component(Entity)) };
+	std::shared_ptr<KeyboardMovementSystemComponent> l_MovementComponent{ ecs.GetComponent<KeyboardMovementSystemComponent>( entityID)};
+	std::shared_ptr<TransformComponent> l_TransformComponent{ ecs.GetComponent<TransformComponent>(entityID) };
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		l_TransformComponent->position.y -= l_MovementComponent->y_velocity;
@@ -31,7 +32,7 @@ void KeyboardMovementSystem::Update_Component(const uint32_t& Entity)
 		l_TransformComponent->position.x += l_MovementComponent->x_velocity;
 }
 
-void KeyboardMovementSystem::Reset_Component(const uint32_t& Entity)
+void KeyboardMovementSystem::ResetComponent(const uint32_t& Entity, ECS_Engine& ecs)
 {
-	m_System_DataStore[Entity] = std::make_shared<MovementComponent>();
+	m_Component_DataStore[Entity] = std::make_shared<MovementComponent>();
 }

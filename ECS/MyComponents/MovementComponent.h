@@ -3,7 +3,7 @@
 
 #include"../Base/BaseComponent.h"
 
-struct MovementComponent : public BaseComponent
+struct MovementComponent final : public BaseComponent
 {
 	float x_velocity{0.0f};
 	float y_velocity{0.0f};

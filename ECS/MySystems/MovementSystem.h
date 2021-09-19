@@ -5,7 +5,7 @@
 #include"../MyComponents/MovementComponent.h"
 
 
-class MovementSystem : public System
+class MovementSystem final : public System
 {
 public:
 	/*
@@ -15,9 +15,13 @@ public:
 	MovementSystem() = default;
 	~MovementSystem() = default;
 
-	void Reset_Component(const uint32_t& Entity) override final;
+	
+	/*
+	Overriding Virtual Functions
+	*/
+	void ResetComponent(const uint32_t& entityID, ECS_Engine& ecs) override final;
 
-	void Update_Component(const uint32_t& Entity) override final;
+	void UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs) override final;
 };
 
 #endif
