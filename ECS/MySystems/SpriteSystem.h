@@ -17,9 +17,9 @@ public:
 	/*
 	Overriding Virtual Functions
 	*/
-	void ResetComponent(const uint32_t& entityID, ECS_Engine& ecs) override final;
+	void ResetComponent(const uint32_t& entityID, ECS_Engine& ecs) override;
 
-	void UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs) override final;
+	void UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs) override;
 
 };
 

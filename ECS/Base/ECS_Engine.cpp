@@ -7,12 +7,14 @@
 #include"../MySystems/SpriteSystem.h"
 #include"../MySystems/TransformSystyem.h"
 #include"../MySystems/MovementSystem.h"
+#include"../MySystems/CollisionSystem.h"
 
 #include"../MyComponents/HealthComponent.h"
 #include"../MyComponents/KeyboardMovementSystemComponent.h"
 #include"../MyComponents/SpriteComponent.h"
 #include"../MyComponents/TransformComponent.h"
 #include"../MyComponents/MovementComponent.h"
+#include"../MyComponents/CollisionComponent.h"
 
 #include<iostream>
 
@@ -24,6 +26,7 @@ ECS_Engine::ECS_Engine()
 	m_ECS_System_DataStore[typeid(SpriteComponent)] = std::make_shared<SpriteSystem>();
 	m_ECS_System_DataStore[typeid(KeyboardMovementSystemComponent)] = std::make_shared<KeyboardMovementSystem>();
 	m_ECS_System_DataStore[typeid(MovementComponent)] = std::make_shared<MovementSystem>();
+	m_ECS_System_DataStore[typeid(CollisionComponent)] = std::make_shared<CollisionSystem>();
 #pragma endregion
 
 #pragma region User Defined Systems
@@ -64,7 +67,7 @@ void ECS_Engine::UpdateECS()
 				if (System.second)
 				{
 					//if system contains entity
-					if(System.second->GetComponent(Entity.second))
+					if(System.second->GetComponentEngine().GetComponent(Entity.second))
 						//update entity componenent 
 						System.second->UpdateComponent(Entity.second, *this);
 				}

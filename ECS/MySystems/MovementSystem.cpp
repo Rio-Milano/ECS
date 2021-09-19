@@ -9,7 +9,7 @@
 
 void MovementSystem::UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	if (!IsMemoryValid({ ecs.GetComponent<TransformComponent>(entityID) }))throw std::string("Bad Memory");
+	if (!m_componentEngine.IsMemoryValid({ ecs.GetComponent<TransformComponent>(entityID) }))throw std::string("Bad Memory");
 
 	auto movement_component = ecs.GetComponent<MovementComponent>(entityID);
 	auto transform_component = ecs.GetComponent<TransformComponent>(entityID);

@@ -33,7 +33,7 @@ public:
 	*/
 	//gets typeid of template type, does a search on the system map, validates system, searches system for component then casts to template type
 	template<class T>
-	const std::shared_ptr<T> GetComponent(const uint32_t& entityID);
+	std::shared_ptr<T> GetComponent(const uint32_t& entityID);
 
 	//gets typeid of template, does a search in system map, valdates system, adds component to system, casts the return value to the template type
 	template<class T> 
@@ -75,14 +75,14 @@ private:
 #endif
 
 template<class T>
-inline const std::shared_ptr<T> ECS_Engine::GetComponent(const uint32_t& entityID)
+inline std::shared_ptr<T> ECS_Engine::GetComponent(const uint32_t& entityID)
 {
 	//get the typeid of the template type and search for a system under that type
 	std::shared_ptr<System> system = m_ECS_System_DataStore[typeid(T)];
 
 	//if a system has been found
 	if (system)//retrieve the component from that system
-		return std::static_pointer_cast<T>(system->GetComponent(entityID));
+		return std::static_pointer_cast<T>(system->GetComponentEngine().GetComponent(entityID));
 
 	return nullptr;
 }
@@ -95,7 +95,7 @@ inline std::shared_ptr<T> ECS_Engine::AddComponent(const uint32_t& entityID, con
 
 	//if system valid
 	if (system)//return system casted to type of template
-		return std::static_pointer_cast<T>(system->AddComponent(entityID, component));
+		return std::static_pointer_cast<T>(system->GetComponentEngine().AddComponent(entityID, component));
 
 	return nullptr;
 }

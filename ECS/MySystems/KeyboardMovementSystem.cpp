@@ -14,7 +14,7 @@
 
 void KeyboardMovementSystem::UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	if (!IsMemoryValid({ ecs.GetComponent<TransformComponent>(entityID) }))throw std::string("Bad Memory");
+	if (!m_componentEngine.IsMemoryValid({ ecs.GetComponent<TransformComponent>(entityID) }))throw std::string("Bad Memory");
 
 	std::shared_ptr<KeyboardMovementSystemComponent> l_MovementComponent{ ecs.GetComponent<KeyboardMovementSystemComponent>( entityID)};
 	std::shared_ptr<TransformComponent> l_TransformComponent{ ecs.GetComponent<TransformComponent>(entityID) };
@@ -32,7 +32,9 @@ void KeyboardMovementSystem::UpdateComponent(const uint32_t& entityID, ECS_Engin
 		l_TransformComponent->position.x += l_MovementComponent->x_velocity;
 }
 
-void KeyboardMovementSystem::ResetComponent(const uint32_t& Entity, ECS_Engine& ecs)
+void KeyboardMovementSystem::ResetComponent(const uint32_t& entityID, ECS_Engine& ecs)
 {
-	m_Component_DataStore[Entity] = std::make_shared<MovementComponent>();
+	auto component = ecs.GetComponent<KeyboardMovementSystemComponent>(entityID);
+	component->x_velocity = 0;
+	component->y_velocity = 0;
 }

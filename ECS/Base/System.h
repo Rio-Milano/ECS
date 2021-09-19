@@ -5,6 +5,7 @@
 #include<list>
 #include<unordered_map>
 #include"BaseComponent.h"
+#include"ComponentEngine.h"
 
 /*
 This is the base class to all of the systems 
@@ -20,21 +21,6 @@ public:
 	System() = default;
 	~System() = default;
 
-	//remove all components from memory
-	void ClearComponents();
-	
-	//Take in a list of components needed for a component update and check if any are invalid
-	const bool IsMemoryValid(const std::list<std::shared_ptr<BaseComponent>>& listOfComponentPointers) const;
-
-	//get a component from the component map
-	const std::shared_ptr<BaseComponent>& GetComponent(const uint32_t& entityID);
-
-	//add a component to the system map
-	const std::shared_ptr<BaseComponent>& AddComponent(const uint32_t& entityID, const std::shared_ptr<BaseComponent>& component);
-	
-	//Remove a component from the system map
-	void RemoveComponent(const uint32_t& entityID);
-	
 	/*
 	Pure Virtual
 	*/
@@ -47,10 +33,12 @@ public:
 	//Updates component data
 	virtual void UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs) {};
 
+	//get the component engine
+	ComponentEngine& GetComponentEngine();
+
 
 protected:
-	//maps entityID to component
-	std::unordered_map<uint32_t, std::shared_ptr<BaseComponent>> m_Component_DataStore;
+	ComponentEngine m_componentEngine;
 
 
 	
