@@ -6,6 +6,7 @@ struct BaseComponent
 {
 	BaseComponent() = default;
 	~BaseComponent() = default;
+
 };
 
 #endif

@@ -26,6 +26,8 @@ struct CollisionComponent final : public BaseComponent
 
 
 
+
+
 	CollisionLayer m_collisionLayer;
 	std::list<uint32_t> m_listOfEntityIDsColliding;
 	float width, height;

@@ -25,6 +25,8 @@ void CollisionSystem::UpdateComponent(const uint32_t& entityID, ECS_Engine& ecs)
 		//check collision with self
 		if (i == currentComponentRecord)
 			continue;
+		if (entityIDCollisionComponent->m_collisionLayer != ecs.GetComponent<CollisionComponent>(i->first)->m_collisionLayer)
+			continue;
 
 		//check collision
 		auto otherEntityIDTransformComponent = ecs.GetComponent<TransformComponent>(i->first);
@@ -52,10 +54,12 @@ const bool CollisionSystem::CheckAABBCollision(const uint32_t& entityID_A, const
 		entityA_Transform->position.y < entityB_Transform->position.y + entityB_CollisionComponent->height &&
 		entityA_Transform->position.y + entityA_CollisionComponent->height > entityB_Transform->position.y)
 
+
 		return true;
 
 	else
 
 		return false;
+
 
 }

@@ -39,6 +39,11 @@ public:
 	template<class T> 
 	std::shared_ptr<T> AddComponent(const uint32_t& entityID, const std::shared_ptr<BaseComponent>& component);
 
+	/*
+	System
+	*/
+	template<class T>
+	std::shared_ptr<T> GetSystem();
 
 	/*
 	ECS Main
@@ -62,6 +67,8 @@ private:
 	std::unordered_map<std::string, uint32_t> m_ECS_Entity_DataStore;
 	//binds the type index of components to the system that holds them
 	std::unordered_map<std::type_index, std::shared_ptr<System>> m_ECS_System_DataStore;
+
+	std::unordered_map<std::type_index, std::shared_ptr<System>> m_ECS_System_DataStore2;
 
 
 
@@ -96,6 +103,16 @@ inline std::shared_ptr<T> ECS_Engine::AddComponent(const uint32_t& entityID, con
 	//if system valid
 	if (system)//return system casted to type of template
 		return std::static_pointer_cast<T>(system->GetComponentEngine().AddComponent(entityID, component));
+
+	return nullptr;
+}
+
+template<class T>
+inline std::shared_ptr<T> ECS_Engine::GetSystem()
+{
+	std::shared_ptr<T> system = std::static_pointer_cast<T>(m_ECS_System_DataStore2[typeid(T)]);
+	if (system)//return system casted to type of template
+		return system;
 
 	return nullptr;
 }

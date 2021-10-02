@@ -8,6 +8,7 @@
 #include"../MySystems/TransformSystyem.h"
 #include"../MySystems/MovementSystem.h"
 #include"../MySystems/CollisionSystem.h"
+#include"../MySystems/AnimationSystem.h"
 
 #include"../MyComponents/HealthComponent.h"
 #include"../MyComponents/KeyboardMovementSystemComponent.h"
@@ -15,6 +16,7 @@
 #include"../MyComponents/TransformComponent.h"
 #include"../MyComponents/MovementComponent.h"
 #include"../MyComponents/CollisionComponent.h"
+#include"../MyComponents/AnimationComponent.h"
 
 #include<iostream>
 
@@ -23,14 +25,29 @@ ECS_Engine::ECS_Engine()
 #pragma region ECS Defined Systems
 	//add each component type id to the system container mapped to the system that holds it
 	m_ECS_System_DataStore[typeid(TransformComponent)] = std::make_shared<TransformSystem>();
+	m_ECS_System_DataStore2[typeid(TransformSystem)] = m_ECS_System_DataStore[typeid(TransformComponent)];
+
 	m_ECS_System_DataStore[typeid(SpriteComponent)] = std::make_shared<SpriteSystem>();
+	m_ECS_System_DataStore2[typeid(SpriteSystem)] = m_ECS_System_DataStore[typeid(SpriteComponent)];
+
 	m_ECS_System_DataStore[typeid(KeyboardMovementSystemComponent)] = std::make_shared<KeyboardMovementSystem>();
-	m_ECS_System_DataStore[typeid(MovementComponent)] = std::make_shared<MovementSystem>();
+	m_ECS_System_DataStore2[typeid(KeyboardMovementSystem)] = m_ECS_System_DataStore[typeid(KeyboardMovementSystemComponent)];
+
+	m_ECS_System_DataStore[typeid(MovementComponent)] = std::make_shared<MovementSystem>(); 
+	m_ECS_System_DataStore2[typeid(MovementSystem)] = m_ECS_System_DataStore[typeid(MovementComponent)];
+
 	m_ECS_System_DataStore[typeid(CollisionComponent)] = std::make_shared<CollisionSystem>();
+	m_ECS_System_DataStore2[typeid(CollisionSystem)] = m_ECS_System_DataStore[typeid(CollisionComponent)];
+	
+	m_ECS_System_DataStore[typeid(AnimationComponent)] = std::make_shared<AnimationSystem>();
+	m_ECS_System_DataStore2[typeid(AnimationSystem)] = m_ECS_System_DataStore[typeid(AnimationComponent)];
+
+
 #pragma endregion
 
 #pragma region User Defined Systems
 	m_ECS_System_DataStore[typeid(HealthComponent)] = std::make_shared<HealthSystem>();
+	m_ECS_System_DataStore2[typeid(HealthSystem)] = m_ECS_System_DataStore[typeid(HealthComponent)];
 #pragma endregion
 }
 

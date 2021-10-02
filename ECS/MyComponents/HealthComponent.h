@@ -9,6 +9,8 @@ struct HealthComponent final : public BaseComponent
 	~HealthComponent() = default;
 
 	float HP, MAX_HP;
+
+	
 };
 
 #endif

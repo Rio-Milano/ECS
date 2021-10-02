@@ -19,16 +19,16 @@ void KeyboardMovementSystem::UpdateComponent(const uint32_t& entityID, ECS_Engin
 	std::shared_ptr<KeyboardMovementSystemComponent> l_MovementComponent{ ecs.GetComponent<KeyboardMovementSystemComponent>( entityID)};
 	std::shared_ptr<TransformComponent> l_TransformComponent{ ecs.GetComponent<TransformComponent>(entityID) };
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		l_TransformComponent->position.y -= l_MovementComponent->y_velocity;
 
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		l_TransformComponent->position.y += l_MovementComponent->y_velocity;
 	
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		l_TransformComponent->position.x -= l_MovementComponent->x_velocity;
 
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		l_TransformComponent->position.x += l_MovementComponent->x_velocity;
 }
 

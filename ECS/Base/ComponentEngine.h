@@ -37,6 +37,7 @@ public:
 	//Remove a component from the system map
 	void RemoveComponent(const uint32_t& entityID);
 
+
 	std::unordered_map <uint32_t, std::shared_ptr<BaseComponent>>& GetComponentPool();
 
 
